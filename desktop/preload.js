@@ -50,4 +50,7 @@ contextBridge.exposeInMainWorld('desktopWindow', {
 window.addEventListener('DOMContentLoaded', () => {
   document.documentElement.classList.add('desktop-shell-root');
   document.body.classList.add('desktop-shell');
+  if (isMacOS) {
+    document.body.classList.add('mac-os');
+  }
 });

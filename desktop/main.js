@@ -1362,6 +1362,7 @@ async function createWindow() {
     autoHideMenuBar: true,
     title: APP_NAME,
     icon: APP_ICON_ICO,
+    ...(isMac ? { trafficLightPosition: { x: 16, y: 12 } } : {}),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
