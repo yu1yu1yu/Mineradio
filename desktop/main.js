@@ -1356,6 +1356,7 @@ async function createWindow() {
     frame: isMac ? undefined : false,
     titleBarStyle: isMac ? 'hiddenInset' : undefined,
     fullscreen: false,
+    fullScreenable: true,
     transparent: true,
     backgroundColor: '#00000000',
     hasShadow: true,
