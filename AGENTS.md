@@ -2,14 +2,12 @@
 
 ## Project Identity
 
-Mineradio 是 Windows Electron 桌面音乐播放器，核心体验包括搜索、播放、歌单、歌词、3D 歌单架、粒子视觉预设、DIY 视觉控制台和 GitHub 自动更新。
+Mineradio 是跨平台 Electron 桌面音乐播放器，核心体验包括搜索、播放、歌单、歌词、3D 歌单架、粒子视觉预设、DIY 视觉控制台和 GitHub 自动更新。
 
-- 当前可运行程序：`E:\桌面\播放器软件\Mineradio\Mineradio.exe`
-- 当前运行版主目录：`E:\桌面\播放器软件\Mineradio`
-- 当前真实代码/Git 仓库：`E:\桌面\播放器软件\Mineradio\resources\app`
+- 当前真实代码/Git 仓库：`F:\Projects\Mineradio`
 - GitHub 仓库：`https://github.com/XxHuberrr/Mineradio.git`
-- 当前源码版本：`v1.1.0`
-- 统一备份区：`E:\桌面\播放器软件\工作区备份`
+- 当前源码版本：`v1.1.1`
+- 支持平台：Windows (NSIS)、macOS (DMG/ZIP)
 
 ## Start Every New Codex Thread Here
 
@@ -49,11 +47,12 @@ npm start
 node --check server.js
 npm run build:win:dir
 npm run build:win
+npm run build:mac
 ```
 
-前端主逻辑在 `public/index.html`。这个目录是正在运行的 `Mineradio.exe` 使用的 app 目录，所以改完后重启外层 `E:\桌面\播放器软件\Mineradio\Mineradio.exe` 就能及时检查效果。没有独立 npm test，改动后至少做：
+前端主逻辑在 `public/index.html`。没有独立 npm test，改动后至少做：
 
-注意：运行版 `resources\app\node_modules` 可能只包含运行依赖。如果发布打包时缺少 `electron-builder`，先在 `E:\桌面\播放器软件\Mineradio\resources\app` 执行 `npm install`，再执行 `npm run build:win`。
+注意：如果发布打包时缺少 `electron-builder`，先在 `F:\Projects\Mineradio` 执行 `npm install`，再执行构建命令。
 
 ```powershell
 git diff --check
