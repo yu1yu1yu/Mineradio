@@ -31,7 +31,7 @@ const MIN_WINDOWED_WIDTH = 960;
 const MIN_WINDOWED_HEIGHT = 540;
 const APP_NAME = 'Mineradio';
 const APP_USER_MODEL_ID = 'com.mineradio.desktop';
-const APP_ICON_ICO = path.join(__dirname, '..', 'build', 'icon.ico');
+const APP_ICON_ICO = path.join(__dirname, '..', 'build', process.platform === 'darwin' ? 'icon.icns' : 'icon.ico');
 const NETEASE_LOGIN_PARTITION = 'persist:mineradio-netease-login';
 const NETEASE_LOGIN_URL = 'https://music.163.com/#/login';
 const QQ_LOGIN_PARTITION = 'persist:mineradio-qqmusic-login';
@@ -48,7 +48,9 @@ const CHROMIUM_PERFORMANCE_SWITCHES = [
   ['disable-renderer-backgrounding'],
   ['disable-backgrounding-occluded-windows'],
   ['force_high_performance_gpu'],
-  ['use-angle', 'd3d11'],
+  ...(process.platform === 'darwin'
+    ? [['use-angle', 'metal']]
+    : [['use-angle', 'd3d11']]),
 ];
 for (const [name, value] of CHROMIUM_PERFORMANCE_SWITCHES) {
   if (value == null) app.commandLine.appendSwitch(name);
