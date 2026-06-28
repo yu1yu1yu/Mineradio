@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mineradio Capacitor Test</title>
+  <script src="https://unpkg.com/@ionic/core@7/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@ionic/core@7/css/ionic.bundle.css">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; }
+    .test-result { margin: 10px 0; padding: 10px; border-radius: 8px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .loading { background: #fff3cd; color: #856404; }
+  </style>
+</head>
+<body>
+  <h1>🎵 Mineradio Capacitor Test</h1>
+
+  <div id="status" class="test-result loading">Loading...</div>
+
+  <script>
+    // 检测 Capacitor 环境
+    const status = document.getElementById('status');
+
+    function log(msg, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `test-result ${type}`;
+      div.textContent = msg;
+      document.body.appendChild(div);
+    }
+
+    // 等待 Capacitor 加载
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // 检查 Capacitor
+        if (window.Capacitor) {
+          status.textContent = '✅ Capacitor loaded';
+          status.className = 'test-result success';
+          log(`Platform: ${window.Capacitor.getPlatform()}`);
+          log(`Is Native: ${window.Capacitor.isNativePlatform()}`);
+
+          // 检查插件
+          const plugins = Object.keys(window.Capacitor.Plugins || {});
+          log(`Plugins: ${plugins.join(', ')}`);
+
+          // 检查 MinMusicApi
+          if (window.MinMusicApi) {
+            log('✅ MinMusicApi available');
+          } else {
+            log('⚠️ MinMusicApi not loaded (expected in test)', 'error');
+          }
+
+          // 测试 CapacitorHttp
+          try {
+            const { data } = await window.Capacitor.Plugins.CapacitorHttp.get({
+              url: 'https://httpbin.org/get',
+              responseType: 'json',
+            });
+            log(`✅ CapacitorHttp works: ${data.origin}`);
+          } catch (err) {
+            log(`❌ CapacitorHttp error: ${err.message}`, 'error');
+          }
+
+          // 测试 CapacitorCookies
+          try {
+            await window.Capacitor.CapacitorCookies.setCookie({
+              key: 'test',
+              value: 'mineradio',
+              url: 'https://music.163.com',
+            });
+            const cookies = await window.Capacitor.CapacitorCookies.getCookies();
+            log(`✅ CapacitorCookies works: test=${cookies.test}`);
+          } catch (err) {
+            log(`⚠️ CapacitorCookies error: ${err.message}`, 'error');
+          }
+
+        } else {
+          status.textContent = '❌ Capacitor not loaded';
+          status.className = 'test-result error';
+          log('Running in browser mode (not Capacitor)');
+        }
+      } catch (err) {
+        status.textContent = `❌ Error: ${err.message}`;
+        status.className = 'test-result error';
+      }
+    });
+  </script>
+</body>
+</html>

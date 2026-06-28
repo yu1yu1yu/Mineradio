@@ -1,0 +1,8 @@
+{
+  "appId": "com.mineradio.app",
+  "appName": "Mineradio",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}
